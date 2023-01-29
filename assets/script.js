@@ -1,6 +1,6 @@
 var API_KEY = "a42435e03c9c146d3a0e1d9e9cbe326c";
 // var API_ENDPOINT = "https://open-weather13.p.rapidapi.com/city/" + city;
-var city = "mexico city";
+var city = "";
 // var currentWeatherURL ="https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}";
 
 // //put this in a function when you click search button
