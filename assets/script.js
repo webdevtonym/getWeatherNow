@@ -1,36 +1,20 @@
-var API_KEY = "a42435e03c9c146d3a0e1d9e9cbe326c";
-// var API_ENDPOINT = "https://open-weather13.p.rapidapi.com/city/" + city;
-var city = "";
-// var currentWeatherURL ="https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}";
+//changes i need to make
+//The page needs to start with no buttons and no data and only have the search button and text box. 
+// when a user searches for a city a button is a added onto the page and saved into local storage and that repeats for each button
+//and each time they search for a new city.
 
-// //put this in a function when you click search button
-// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-// ).then(function (response) {
-//   if(response.ok) {
-//     return response.json();
-//   }
-// }).then(function(data) {
-//   console.log(data); //Console logging what is fetched from the link above
-//   var temp = data.main.temp; // current temperature variable is equal to the temperature from the API
-//   var wind = data.wind.speed; // current wind speed variable is equal to the wind speed data from the API
-//   var currentHumidity = data.main.humidity; //current humidity variable is equal to the humidity data in the API
+// Buttons need to be persistent and store in local storage
 
-//   //test code
-//   console.log("This is the current temperature in mexico city: " + (temp - 273.14).toFixed(1) + " celcius");
-//   console.log("This is the current humidity in mexico city: " + currentHumidity+"%");
+var API_KEY = "9f13742bedf90292ac76d40eac54706c";
+// var city = document.getElementById("search-input").value;
+var city = "mexico city";
 
-//   //call function here
-//   // showCurrentTemperature(temp); //show the API data from variable using showCurrentTemperature() function.
-//   // getCurrentWind(wind);  //show the API data from variable using showCurrentTemperature() function.
-//   // getCurrentHumidity(currentHumidity);
-//   // getCurrentWeatherInMex(data, temp); //when calling functions - i'm not sure what i am doing in terms of the parameters that should be going in there.
-// })
+console.log(showCurrentWeather());
 
 //Function 1 = handle the buttons for each city.
-function showCurrentWeather(city) {
-  fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
-  )
+function showCurrentWeather(city, API_KEY) {
+  var promptAPI = prompt('Enter your API key');
+  fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${promptAPI}`)
     .then(function (response) {
       if (response.ok) {
         return response.json("");
@@ -48,7 +32,7 @@ function showCurrentWeather(city) {
       document.getElementById("city-name-h2").textContent = city;
       //get the elements from the HTML and assign the textContent to the variable created above.
       document.getElementById("current-temperature").textContent =
-        (currentTemperature - 273.15).toFixed(1) + " Celcius";
+        "Temperature: " + (currentTemperature - 273.15).toFixed(1) + " Celcius";
       document.getElementById(
         "current-wind"
       ).textContent = `Wind: ${currentWindSpeed} mph`;
@@ -61,58 +45,122 @@ function showCurrentWeather(city) {
     });
 }
 
-// declare buttons as variables
-var mexicoCityBtn = document.getElementById("mexico-city");
-var manchesterBtn = document.getElementById("manchester-btn");
-var londonBtn = document.getElementById("london-btn");
-var gibraltarBtn = document.getElementById("gibraltar-btn");
-var dublinBtn = document.getElementById("dublin-btn");
-var sydneyBtn = document.getElementById("sydney-btn");
+
+
+//remove buttons
+//add a loop to add buttons dynamically to the page and change the name of the button to the city tha the user chooses.
+//buttons must add to local storage and be there when the page refreshes.
+
+
+//------------------------------------USER INPUT------------------------------------//
+
+// declare search button as a variable
+var searchBtn = document.getElementById("search-button");
+
+//declare search box as a variable
+var searchBox = document.getElementById('search-input').textContent;
+
+// //declare a variable to handle the value
+// var output = document.getElementById('city-name-h2');
+// output.textContent = searchBox.value; // Get user entered value from text box
+
 
 //Event listeners for buttons
-mexicoCityBtn.addEventListener("click", function () {
-  var city = "Mexico city";
+searchBtn.addEventListener("click", function () {
+  document.getElementById("city-name-h2").style.fontSize = "2em"; //target the html element city-name-h2 and change the html text.
+  //the value of the text in the box needs to be matched to the same value in the api object.
+
+
+
+
+
+
+
+
+  // var city = prompt("Enter the city name");
   //NEED TO ADD TODAYS CURRENT DATE
   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
+  showCurrentWeather(city, API_KEY);
+  renderButtons(city);
+  fiveDayForecast(city);
+
 });
 
-manchesterBtn.addEventListener("click", function () {
-  var city = "Manchester";
-  //NEED TO ADD TODAYS CURRENT DATE
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
-});
 
-londonBtn.addEventListener("click", function () {
-  var city = "London";
-  //NEED TO ADD TODAYS CURRENT DATE
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
-});
-gibraltarBtn.addEventListener("click", function () {
-  var city = "Gibraltar";
-  //NEED TO ADD TODAYS CURRENT DATE
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
-});
-dublinBtn.addEventListener("click", function () {
-  var city = "Dublin";
-  //NEED TO ADD TODAYS CURRENT DATE
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
-});
-sydneyBtn.addEventListener("click", function () {
-  var city = "Sydney";
-  //NEED TO ADD TODAYS CURRENT DATE
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
-  showCurrentWeather(city);
-});
+//--------------------------------Render Buttons dynamically-----------------------------//
 
-//Function 2 = handle the search button and text box.
+  //Render buttons on page dynamically when user chooses their city and clicks the button
+
+var buttonsArr = [];
+
+function renderButtons() {
+  $("buttons").empty; //clear anything inside the buttons div prior to the loop starting
+
+  for (var i = 0; i < buttonsArr.length; i++) {
+    var btn = $("<button>"); // assign html to button variable
+    btn.addClass("btn"); // create a class
+    btn.attr("data-name", buttonsArr[i]); //adding data attribute at with a value of i for the buttonsArr array
+    btn.text(buttonsArr[i]); //Give the button text from the value of the i in the buttonsArr
+    $("buttons").append(buttonsArr); //add the button to the buttons div
+    //SOMEHOW NEED TO APPEND THE CHOICE OF THE USER STORED IN THE ARRAY TO THE PAGE.
+  }
+}
 
 
 
+//-------------------------------------------Get 5 day forecast----------------------------------------//
+
+
+//Function 2 = get the 5 day forecast
+function fiveDayForecast(city, API_KEY) {
+  //put parameters lat and lon in the function above
+
+   var url = `https://api.openweathermap.org/data/2.5/forecast?id=${city}&appid=${API_KEY}`;
+   
+  // var url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+
+  // `http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}`;
+
+  fetch(url)
+    .then(function (response) {
+      if (response.ok) {
+        return response.json("");
+      }
+    })
+    .then(function (data) {
+
+      console.log(data); //to test output
+      var forecastData = data.list;
+
+      for (let i = 0; i < forecastData.length; i += 8) {
+        const day = forecastData[i];
+        const date = new Date(day.dt * 1000);
+        const formattedDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+        const wind = data.list[0].wind.speed;
+        const temperature = day.main.temp - 275.15;
+        const fixedTemperature = temperature.toFixed(2);
+        const humidity = data.list[0].main.humidity;
+        const dayElement = document.getElementById(`day${i / 8 + 1}`);
+
+        if (dayElement) {
+          dayElement.innerHTML = `
+    <p>Date: ${formattedDate}</p>
+    <p>Wind: ${wind} kph</p>
+    <p>Temperature: ${fixedTemperature}°C</p>
+    <p>Humidity: ${humidity}%</p>
+  `;
+        } else {
+          console.error(
+            `Element with id "#day${i / 8 + 1}" not found in the HTML document`
+          );
+        }
+      }
+    }
+    )
+
+}
+
+fiveDayForecast();
 
 
 
@@ -130,6 +178,14 @@ sydneyBtn.addEventListener("click", function () {
 
 
 
+
+// Function 3 = handle the search button and text box.
+// function searchCityWeather(){
+
+// }
+
+
+// ==================================================================================================================================================================
 
 // //current temperature function
 // function showCurrentTemperature(temp) {
@@ -190,3 +246,73 @@ sydneyBtn.addEventListener("click", function () {
 //   var API_ENDPOINT = "https://open-weather13.p.rapidapi.com/city/" + city;
 //   var city = "mexico city";
 // }
+
+
+
+
+// var lat = "19.389385";
+// var lon = "-99.144308";
+
+// var currentWeatherURL ="https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}";
+
+// //put this in a function when you click search button
+// fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+// ).then(function (response) {
+//   if(response.ok) {
+//     return response.json();
+//   }
+// }).then(function(data) {
+//   console.log(data); //Console logging what is fetched from the link above
+//   var temp = data.main.temp; // current temperature variable is equal to the temperature from the API
+//   var wind = data.wind.speed; // current wind speed variable is equal to the wind speed data from the API
+//   var currentHumidity = data.main.humidity; //current humidity variable is equal to the humidity data in the API
+
+//   //test code
+//   console.log("This is the current temperature in mexico city: " + (temp - 273.14).toFixed(1) + " celcius");
+//   console.log("This is the current humidity in mexico city: " + currentHumidity+"%");
+
+//   //call function here
+//   // showCurrentTemperature(temp); //show the API data from variable using showCurrentTemperature() function.
+//   // getCurrentWind(wind);  //show the API data from variable using showCurrentTemperature() function.
+//   // getCurrentHumidity(currentHumidity);
+//   // getCurrentWeatherInMex(data, temp); //when calling functions - i'm not sure what i am doing in terms of the parameters that should be going in there.
+// })
+
+
+// manchesterBtn.addEventListener("click", function () {
+//   document.getElementById("city-name-h2").style.fontSize = "2em";
+//   var city = "Manchester";
+//   //NEED TO ADD TODAYS CURRENT DATE
+//   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
+//   showCurrentWeather(city);
+// });
+
+// londonBtn.addEventListener("click", function () {
+//   document.getElementById("city-name-h2").style.fontSize = "2em";
+//   var city = "London";
+//   //NEED TO ADD TODAYS CURRENT DATE
+//   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
+//   showCurrentWeather(city);
+// });
+
+// gibraltarBtn.addEventListener("click", function () {
+//   document.getElementById("city-name-h2").style.fontSize = "2em";
+//   var city = "Gibraltar";
+//   //NEED TO ADD TODAYS CURRENT DATE
+//   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
+//   showCurrentWeather(city);
+// });
+// dublinBtn.addEventListener("click", function () {
+//   document.getElementById("city-name-h2").style.fontSize = "2em";
+//   var city = "Dublin";
+//   //NEED TO ADD TODAYS CURRENT DATE
+//   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
+//   showCurrentWeather(city);
+// });
+// sydneyBtn.addEventListener("click", function () {
+//   document.getElementById("city-name-h2").style.fontSize = "2em";
+//   var city = "Sydney";
+//   //NEED TO ADD TODAYS CURRENT DATE
+//   //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
+//   showCurrentWeather(city);
+// });
