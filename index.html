@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="/assets/styles/style.css">
     <title>Weather Dashboard</title>
   </head>
 
@@ -22,7 +23,6 @@
     >
       <h1>Weather Dashboard</h1>
     </header>
-    
     <!-- max-width for ultra wide resolutions -->
     <div class="container-fluid" style="max-width: 1400px">
       <div class="row mx-auto d-flex">
@@ -44,7 +44,7 @@
                   class="form-input weather-search col-12 h-550"
                   type="text"
                   id="search-input"
-                  placeholder="London"
+                  placeholder="Enter City"
                   aria-labelledby="form-heading"
                   aria-controls="today forecast"
                 />
@@ -66,60 +66,6 @@
 
                   <hr class="hr" />
 
-                  <!-- <button
-                    type="button"
-                    id="mexico-city"
-                    value="mexicoCity"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    Mexico City
-                  </button>
-
-                  <button
-                    type="button"
-                    id="manchester-btn"
-                    value="manchester"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    Manchester
-                  </button>
-
-                  <button
-                    type="button"
-                    id="london-btn"
-                    value="london"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    London
-                  </button>
-
-                  <button
-                    type="button"
-                    id="gibraltar-btn"
-                    value="gibraltar"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    Gibraltar
-                  </button>
-
-                  <button
-                    type="button"
-                    id="dublin-btn"
-                    value="dublin"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    Dublin
-                  </button>
-
-                  <button
-                    type="button"
-                    id="sydney-btn"
-                    value="sydney"
-                    class="btn btn-secondary rounded d-block col-12 my-2"
-                  >
-                    Sydney
-                  </button> --> 
-
                   <hr class="hr weather-hr" />
                 </div>
               </div>
@@ -138,19 +84,20 @@
             aria-live="polite"
             style="border: 1px solid black"
           >
-
+          
           <div class="ml-3 mt-1">
 
+             <!-- change to class so there isnt 3 ID's of the same name -->
+
             <div id="city-name-h2">
-              <h2 id="form-heading" class="mt-4 h3 form-label">
-               {CITY_NAME} {DATE}
-              </h2>
+              <h2 id="form-heading" class="mt-4 h3 form-label"><span id="date"></span></h2>
+                <h2></h2>
             </div>
 
             <div>
-              <p id="current-temperature">Temp:</p>
-              <p id="current-wind">Wind:</p>
-              <p id="current-humidity">Humidity:</p>
+              <p id="current-temperature"></p>
+              <p id="current-wind"></p>
+              <p id="current-humidity"></p>
             </div>
           </div>
           </section>
@@ -161,19 +108,20 @@
             class="row mt-3 h-50 text-center clearfix"
             role="region"
             aria-live="polite"
-            style="border: 1px solid black"
-          >
-            <div class="row ml-3 ">
+           
+          
+            <div class="row">
               <div class=" ml-auto d-flex justify-content-start">
-                <h3>5 day forecast</h3>
+                <h3 style="position: absolute; padding-top: 20px; left: 10px;">5-day forecast:</h3>
               </div>
 
-              <div class="justify-content-center d-flex flex-row">
-                <div id="day1" class="col-2 bg-primary" style="border: 1px solid black">Day 1</div>
-                <div id="day2" class="col-2 bg-primary" style="border: 1px solid black">Day 2</div>
-                <div id="day3" class="col-2 bg-primary" style="border: 1px solid black">Day 3</div>
-                <div id="day4" class="col-2 bg-primary" style="border: 1px solid black">Day 4</div>
-                <div id="day5" class="col-2 bg-primary" style="border: 1px solid black">Day 5</div>
+              <div class=" d-flex flex-row"
+              style="margin-right: 150px; padding-bottom: 60px;">
+                <div id="day1" class="col-2  icon" style="border: 1px solid black">Day 1</div>
+                <div id="day2" class="col-2  icon" style="border: 1px solid black">Day 2</div>
+                <div id="day3" class="col-2  icon" style="border: 1px solid black">Day 3</div>
+                <div id="day4" class="col-2  icon" style="border: 1px solid black">Day 4</div>
+                <div id="day5" class="col-2  icon" style="border: 1px solid black">Day 5</div>
               </div>
             </div>
           </section>
