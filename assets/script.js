@@ -34,7 +34,8 @@ var searchInput = document.getElementById("search-input");
 // Buttons need to be persistent and store in local storage
 
 //need to make API key hidden using gitIgnore
-var API_KEY = "b7fad981b71613187ec4f69ac3e60320";
+const apiKey = window.API_KEY;
+
 var city;
 renderButtons();
 //------------------------------------User Input------------------------------------//
@@ -58,6 +59,13 @@ searchBtn.addEventListener("click", function (event) {
   // setLocalStorage();
   searchInput.value = "";
 });
+
+//-----------------------Get today's date function------------------------//
+
+function getTodaysDate() {
+  var todayDate = moment().format("D/M/YYYY");
+  return todayDate;
+}
 
 //----------------------Show today's weather for the chosen city in the top div------------------------//
 
@@ -107,17 +115,7 @@ function showCurrentWeather(btncity) {
     });
 }
 
-//-----------------------Get today's date function------------------------//
 
-function getTodaysDate() {
-  var todayDate = moment().format("D/M/YYYY");
-  // $("#date")
-  //   .text("(" + todayDate + ")")
-  //   .css("font-size", "1em");
-  return todayDate;
-
-  // console.log(todayDate);
-}
 
 //-------------------------------------------Get 5 day forecast----------------------------------------//
 
@@ -155,15 +153,7 @@ function fiveDayForecast(city) {
         iconImg.style.width = "50px"; //give it a width
         iconImg.style.height = "50px"; //give it a height
 
-        // document.querySelector(`#day${(i/8)+1}`).appendChild(iconImg);
-
-        //take the class icon and append the variable to it
         console.log("This is the iconimage " + JSON.stringify(iconImg));
-
-        // console.log(
-        //   "this is the data from the 5 day forecast: " + JSON.stringify(data)
-        // ); //to test output
-
         if (dayElement) {
           dayElement.innerHTML = `
     <p>Date: ${formattedDate}<span></span></p>
@@ -179,7 +169,7 @@ function fiveDayForecast(city) {
         }
       }
     })
-    .catch((err) => {
+    .catch((err) => { //to catch any errors
       console.log(err);
     });
 }
@@ -204,13 +194,10 @@ function renderButtons(city) {
       event.preventDefault();
       console.log(buttonsArr[i] || event.target.value);
       showCurrentWeather(event.target.value); //run function to show today's weather
-      // renderButtons(city);
       fiveDayForecast(event.target.value);
     });
     $("#city-button").append(btn); //add the button to the buttons div
-    // var cities = JSON.parse(localStorage.getItem("city")) || [];
-
-    //SOMEHOW NEED TO APPEND THE CHOICE OF THE USER STORED IN THE ARRAY TO THE PAGE.
+   
   }
 }
 

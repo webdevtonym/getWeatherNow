@@ -13,7 +13,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/assets/styles/style.css">
+    <link rel="stylesheet" href="/assets/styles/style.css" />
     <title>Weather Dashboard</title>
   </head>
 
@@ -29,16 +29,13 @@
         <!-- Aside -->
         <aside class="col pb-3 flex-column">
           <!-- Form heading -->
-          <h2 id="form-heading" class="mt-4 h3 form-label">
-            Search for a City:
-          </h2>
+          <h2 class="mt-4 h3 form-label">Search for a City:</h2>
 
           <!-- Form -->
           <form id="search-form" class="form">
             <div class="form-inline form-group">
               <!-- Input group -->
               <div class="input-group">
-                
                 <!-- Weather search textbox -->
                 <input
                   class="form-input weather-search col-12 h-550"
@@ -60,11 +57,11 @@
                     id="search-button"
                     aria-label="submit search"
                     value="search"
-                  >Search
+                  >
+                    Search
                   </button>
 
                   <div id="city-button"></div>
-                  
 
                   <hr class="hr" />
 
@@ -86,22 +83,20 @@
             aria-live="polite"
             style="border: 1px solid black"
           >
-          
-          <div class="ml-3 mt-1">
+            <div class="ml-3 mt-1">
+              <!-- change to class so there isnt 3 ID's of the same name -->
 
-             <!-- change to class so there isnt 3 ID's of the same name -->
-
-            <div id="city-name-h2">
-              <h2 id="form-heading" class="mt-4 h3 form-label"><span id="date"></span></h2>
+              <div id="city-name-h2">
+                <h2 class="mt-4 h3 form-label"><span id="date"></span></h2>
                 <h2></h2>
-            </div>
+              </div>
 
-            <div>
-              <p id="current-temperature"></p>
-              <p id="current-wind"></p>
-              <p id="current-humidity"></p>
+              <div>
+                <p id="current-temperature"></p>
+                <p id="current-wind"></p>
+                <p id="current-humidity"></p>
+              </div>
             </div>
-          </div>
           </section>
 
           <!-- 5 day forcast cards -->
@@ -109,21 +104,44 @@
             id="forecast"
             class="row mt-3 h-50 text-center clearfix"
             role="region"
-            aria-live="polite">
-           
-          
+            aria-live="polite"
+          >
             <div class="row">
-              <div class=" ml-auto d-flex justify-content-start">
-                <h3 style="position: absolute; padding-top: 20px; left: 10px;">5-day forecast:</h3>
+              <div class="ml-auto d-flex justify-content-start">
+                <h3 style="position: absolute; padding-top: 20px; left: 10px">
+                  5-day forecast:
+                </h3>
               </div>
 
-              <div class=" d-flex flex-row"
-              style="margin-right: 150px; padding-bottom: 60px;">
-                <div id="day1" class="col-2  icon" style="border: 1px solid black"></div>
-                <div id="day2" class="col-2  icon" style="border: 1px solid black"></div>
-                <div id="day3" class="col-2  icon" style="border: 1px solid black"></div>
-                <div id="day4" class="col-2  icon" style="border: 1px solid black"></div>
-                <div id="day5" class="col-2  icon" style="border: 1px solid black">p</div>
+              <div
+                class="d-flex flex-row"
+                style="margin-right: 150px; padding-bottom: 60px"
+              >
+                <div
+                  id="day1"
+                  class="col-2 icon"
+                  style="border: 1px solid black"
+                ></div>
+                <div
+                  id="day2"
+                  class="col-2 icon"
+                  style="border: 1px solid black"
+                ></div>
+                <div
+                  id="day3"
+                  class="col-2 icon"
+                  style="border: 1px solid black"
+                ></div>
+                <div
+                  id="day4"
+                  class="col-2 icon"
+                  style="border: 1px solid black"
+                ></div>
+                <div
+                  id="day5"
+                  class="col-2 icon"
+                  style="border: 1px solid black"
+                ></div>
               </div>
             </div>
           </section>
@@ -131,6 +149,8 @@
       </div>
     </div>
 
+    <!-- FOR FUTURE DEVELOPMENT -->
+    <!--  
     <div id="warningModal" class="modal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -149,14 +169,13 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
-  
     <!-- Moment.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="/assets/script.js"></script>
-
+    <script src="/assets/keys.js"></script>
   </body>
 </html>
