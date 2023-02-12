@@ -10,9 +10,11 @@ var searchInput = document.getElementById("search-input");
 // Buttons need to be persistent and store in local storage
 
 //need to make API key hidden using gitIgnore
-var apiKey = window.API_KEY;
+// var apiKey = window.API_KEY;
+var apiKey = "b7fad981b71613187ec4f69ac3e60320";
 
-console.log(apiKey);
+
+
 
 var city;
 renderButtons();
