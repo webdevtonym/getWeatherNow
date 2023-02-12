@@ -1,27 +1,3 @@
-// Problems with the program now
-
-//1. if you don't enter code into the text box and press enter, a box with an empty string appears
-//if this happens it should stop the program running and display an alert modal message to tell them to reenter the city name
-
-//if they enter the nothing at all and click the button
-//then it should alert them that they didnt enter a city and to try again
-//the program should stop running completely
-//No button should be added
-
-//i could use an if statement to check the condition whether they enter correct or not.
-
-//if they enter something that doesn't match the cities that are stored in the server API
-//then it should alert them that they didnt enter a city and to try again
-//the program should stop running completely
-//No button should be added
-
-//things tried: and if statement on the event listener, an if statement on the .then response and also the .then data.
-
-//2. The modal i added does not appear and i get errors in the console.
-
-//3. I want to hide my API key and also go back to github and remove all instances to it.
-
-//4. trying to save the button to local storage and have it stay there even after refreshing the page.
 
 //-------------Global Variables-----------------//
 

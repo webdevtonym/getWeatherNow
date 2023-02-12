@@ -1,18 +1,17 @@
 # getWeatherNow
 
 ## Description
-
-- 
-
-
+This is a program that will display the current weather for any city around the world that a user enters.
+It will give today's forecast and also a 5 day forecast.
+The program will create buttons and append them to the page whilst saving them to local storage. 
 ## Usage
 
 - This is only to be used by me for studying purposes.
 - A mock-up screenshot of the finished website is provided below.
 
-![](/images/workDayScheduler.png)
+![getWeatherNow](/images/weatherImg.png)
 
-Link to application: 
+Link to application: https://webdevtonym.github.io/getWeatherNow/
 
 ## License
 
