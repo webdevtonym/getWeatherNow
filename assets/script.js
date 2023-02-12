@@ -12,6 +12,8 @@ var searchInput = document.getElementById("search-input");
 //need to make API key hidden using gitIgnore
 var apiKey = window.API_KEY;
 
+console.log(apiKey);
+
 var city;
 renderButtons();
 //------------------------------------User Input------------------------------------//
