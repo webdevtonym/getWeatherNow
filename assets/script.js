@@ -49,7 +49,7 @@ function showCurrentWeather(btncity) {
   city = btncity || city;
 
   fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
   )
     .then(function (response) {
       if (response.ok) {
@@ -97,7 +97,7 @@ function showCurrentWeather(btncity) {
 
 function fiveDayForecast(city) {
   fetch(
-    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`
+    `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}`
   )
     .then(function (response) {
       if (response.ok) {
@@ -145,7 +145,8 @@ function fiveDayForecast(city) {
         }
       }
     })
-    .catch((err) => { //to catch any errors
+    .catch((err) => {
+      //to catch any errors
       console.log(err);
     });
 }
