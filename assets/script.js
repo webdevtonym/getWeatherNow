@@ -1,8 +1,27 @@
-//changes i need to make
-//The page needs to start with no buttons and no data and only have the search button and text box.
-// when a user searches for a city a button is a added onto the page and saved into local storage and that repeats for each button
-//and each time they search for a new city.
+// Problems with the program now
 
+//1. if you don't enter code into the text box and press enter, a box with an empty string appears
+//if this happens it should stop the program running and display an alert modal message to tell them to reenter the city name
+
+//if they enter the nothing at all and click the button
+//then it should alert them that they didnt enter a city and to try again
+//the program should stop running completely
+//No button should be added
+
+//i could use an if statement to check the condition whether they enter correct or not.
+
+//if they enter something that doesn't match the cities that are stored in the server API
+//then it should alert them that they didnt enter a city and to try again
+//the program should stop running completely
+//No button should be added
+
+//things tried: and if statement on the event listener, an if statement on the .then response and also the .then data.
+
+//2. The modal i added does not appear and i get errors in the console.
+
+//3. I want to hide my API key and also go back to github and remove all instances to it.
+
+//4. trying to save the button to local storage and have it stay there even after refreshing the page.
 
 //-------------Global Variables-----------------//
 
@@ -13,36 +32,37 @@ var searchBtn = document.getElementById("search-button");
 var searchInput = document.getElementById("search-input");
 
 // Buttons need to be persistent and store in local storage
+
+//need to make API key hidden using gitIgnore
 var API_KEY = "b7fad981b71613187ec4f69ac3e60320";
 var city;
-
-//https://api.openweathermap.org/data/2.5/forecast?q=manchester&appid=b7fad981b71613187ec4f69ac3e60320
-//------------------------------------USER INPUT------------------------------------//
+renderButtons();
+//------------------------------------User Input------------------------------------//
 
 //Event listener for search button button
-https: searchBtn.addEventListener("click", function (event) {
+searchBtn.addEventListener("click", function (event) {
   //very important to make sure it functions
-  event.preventDefault(); //Works ok
+  event.preventDefault();
 
   //adds the entered value to the city variable.
-  city = searchInput.value; // works ok
+  city = searchInput.value;
 
   //ensures the first letter is captialised (important that this comes after setting the city to the value)
-  city = city.charAt(0).toUpperCase() + city.slice(1); // works ok
+  city = city.charAt(0).toUpperCase() + city.slice(1);
 
-  //NEED TO ADD AN ICON FOR THE CURRENT WEATHER
   showCurrentWeather(city); //run function to show today's weather
 
   // renderButtons(city);
   fiveDayForecast(city);
+
   // setLocalStorage();
   searchInput.value = "";
 });
 
 //----------------------Show today's weather for the chosen city in the top div------------------------//
 
-//Function 1 = handle the buttons for each city.
-function showCurrentWeather() {
+function showCurrentWeather(btncity) {
+  city = btncity || city;
 
   fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`
@@ -51,11 +71,12 @@ function showCurrentWeather() {
       if (response.ok) {
         return response.json("");
       } else {
-        return "error";
+        throw new Error("Not a valid city");
       }
     })
     .then(function (data) {
-      console.log(data);
+      renderButtons(city || btncity);
+
       //assign data from API to variables.
       var currentTemperature = data.main.temp;
       var currentWindSpeed = data.wind.speed;
@@ -80,7 +101,9 @@ function showCurrentWeather() {
       document.getElementById(
         "current-humidity"
       ).textContent = `Humidity: ${currentHumidity}%`;
-  
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
 
@@ -88,31 +111,25 @@ function showCurrentWeather() {
 
 function getTodaysDate() {
   var todayDate = moment().format("D/M/YYYY");
-    // $("#date")
-    //   .text("(" + todayDate + ")")
-    //   .css("font-size", "1em");
+  // $("#date")
+  //   .text("(" + todayDate + ")")
+  //   .css("font-size", "1em");
   return todayDate;
 
   // console.log(todayDate);
 }
 
-
-//remove buttons
-//add a loop to add buttons dynamically to the page and change the name of the button to the city that
-// the user chooses.
-//buttons must add to local storage and be there when the page refreshes.
-
 //-------------------------------------------Get 5 day forecast----------------------------------------//
 
-//Function 2 = get the 5 day forecast
 function fiveDayForecast(city) {
-
   fetch(
     `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}`
   )
     .then(function (response) {
       if (response.ok) {
         return response.json("");
+      } else {
+        throw new Error("Not a valid city");
       }
     })
     .then(function (data) {
@@ -120,8 +137,10 @@ function fiveDayForecast(city) {
 
       for (let i = 0; i < forecastData.length; i += 8) {
         const day = forecastData[i]; //variable iterator so we can get each item in the API object
-        const date = new Date(day.dt * 1000); 
-        const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`; //variable to show the dates
+        const date = new Date(day.dt * 1000);
+        const formattedDate = `${date.getDate()}/${
+          date.getMonth() + 1
+        }/${date.getFullYear()}`; //variable to show the dates
         const wind = data.list[0].wind.speed;
         const temperature = day.main.temp - 275.15; // get the temperature in...
         const fixedTemperature = temperature.toFixed(2); //move decimal place
@@ -139,9 +158,11 @@ function fiveDayForecast(city) {
         // document.querySelector(`#day${(i/8)+1}`).appendChild(iconImg);
 
         //take the class icon and append the variable to it
-        console.log("This is the iconimage " + iconImg);
+        console.log("This is the iconimage " + JSON.stringify(iconImg));
 
-        console.log("this is the data from the 5 day forecast: " + data); //to test output
+        // console.log(
+        //   "this is the data from the 5 day forecast: " + JSON.stringify(data)
+        // ); //to test output
 
         if (dayElement) {
           dayElement.innerHTML = `
@@ -157,39 +178,40 @@ function fiveDayForecast(city) {
           );
         }
       }
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }
-
-
 //--------------------------------Render Buttons dynamically-----------------------------//
 
 //Render buttons on page dynamically when user chooses their city and clicks the button
 
-// var buttonsArr = [];
+function renderButtons(city) {
+  $("#city-button").empty(); //clear anything inside the buttons div prior to the loop starting, links to the div button element
+  var buttonsArr = JSON.parse(localStorage.getItem("cities")) || [];
+  if (city && !buttonsArr.includes(city)) {
+    buttonsArr.push(city);
+    localStorage.setItem("cities", JSON.stringify(buttonsArr));
+  }
 
-// function renderButtons() {
-//   $("buttons").empty; //clear anything inside the buttons div prior to the loop starting
+  for (var i = 0; i < buttonsArr.length; i++) {
+    var btn = $("<button>"); // assign html to button variable
+    btn.addClass("city-btn"); // create a class
+    btn.attr("value", buttonsArr[i]); //adding data attribute at with a value of i for the buttonsArr array
+    btn.text(buttonsArr[i]); //Give the button text from the value of the i in the buttonsArr
+    btn.click(function (event) {
+      event.preventDefault();
+      console.log(buttonsArr[i] || event.target.value);
+      showCurrentWeather(event.target.value); //run function to show today's weather
+      // renderButtons(city);
+      fiveDayForecast(event.target.value);
+    });
+    $("#city-button").append(btn); //add the button to the buttons div
+    // var cities = JSON.parse(localStorage.getItem("city")) || [];
 
-//   for (var i = 0; i < buttonsArr.length; i++) {
-//     var btn = $("<button>"); // assign html to button variable
-//     btn.addClass("btn"); // create a class
-//     btn.attr("data-name", buttonsArr[i]); //adding data attribute at with a value of i for the buttonsArr array
-//     btn.text(buttonsArr[i]); //Give the button text from the value of the i in the buttonsArr
-//     $("buttons").append(buttonsArr); //add the button to the buttons div
-//     //SOMEHOW NEED TO APPEND THE CHOICE OF THE USER STORED IN THE ARRAY TO THE PAGE.
-//   }
-// }
-
-// Function 3 = get today's date
-
-// function searchCityWeather(){
-
-// }
+    //SOMEHOW NEED TO APPEND THE CHOICE OF THE USER STORED IN THE ARRAY TO THE PAGE.
+  }
+}
 
 // ==================================================================================================================================================================
-
-
-
-
-
-
